@@ -56,7 +56,7 @@ User → Streamlit UI → FastAPI Backend → LangGraph Multi-Agent Workflow
 
 ---
 ## 📁 Project Structure
-
+```
 multi-agent-ai-platform/
 │
 ├── backend/
@@ -84,7 +84,7 @@ multi-agent-ai-platform/
 ├── docker-compose.yml
 ├── .gitignore
 └── README.md
-
+```
 ## 🚀 Features
 
 ### 🧠 AI Capabilities
