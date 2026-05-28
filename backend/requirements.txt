@@ -1,5 +1,5 @@
 fastapi
-uvicorn
+uvicorn[standard]
 python-multipart
 
 langchain
@@ -7,20 +7,23 @@ langgraph
 langchain-community
 langchain-groq
 
-faiss-cpu
+sentence-transformers==2.7.0
+faiss-cpu==1.7.4
 
 pypdf
 python-docx
 
 pandas
-numpy
+numpy<2.0
 
 sqlalchemy
 psycopg2-binary
 redis
 
 python-dotenv
-
-streamlit
 requests
 pydantic
+
+torch==2.2.2
+transformers==4.41.2
+
