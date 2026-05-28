@@ -5,15 +5,14 @@ BACKEND_URL = "https://multi-agent-ai-platform-d82d.onrender.com"
 
 st.set_page_config(
     page_title="Multi-Agent AI Platform",
-    page_icon="🤖",
     layout="wide"
 )
 
 st.title("🤖 Multi-Agent AI Platform")
 
-# =========================
+# ==========================================
 # PDF Upload
-# =========================
+# ==========================================
 
 uploaded_file = st.file_uploader(
     "Upload PDF",
@@ -32,92 +31,87 @@ if uploaded_file is not None:
 
     try:
 
-        response = requests.post(
-            f"{BACKEND_URL}/upload",
-            files=files,
-            timeout=120
-        )
+        with st.spinner("Uploading PDF..."):
+
+            response = requests.post(
+                f"{BACKEND_URL}/upload",
+                files=files,
+                timeout=300
+            )
 
         st.write("Status Code:", response.status_code)
-        st.write("Raw Response:", response.text)
 
-        # SAFE RESPONSE
-        if response.text.strip() == "":
-            st.error("Empty response from backend")
+        try:
 
-        else:
+            data = response.json()
 
-            try:
-                data = response.json()
+            if response.status_code == 200:
 
-                if response.status_code == 200:
-                    st.success(
-                        data.get(
-                            "message",
-                            "Upload successful"
-                        )
+                st.success(
+                    data.get(
+                        "message",
+                        "Upload successful"
                     )
-                else:
-                    st.error(data)
+                )
 
-            except Exception:
-                st.error("Backend returned invalid JSON")
-                st.code(response.text)
+            else:
+                st.error(data)
+
+        except Exception:
+
+            st.error("Invalid JSON from backend")
+            st.code(response.text)
 
     except Exception as e:
+
         st.error(str(e))
 
-# =========================
-# CHAT SECTION
-# =========================
+# ==========================================
+# Chat Section
+# ==========================================
 
 query = st.text_input("Ask anything")
 
 if st.button("Send"):
 
     if query.strip() == "":
-        st.warning("Please enter query")
+        st.warning("Please enter a query")
 
     else:
 
         try:
 
-            response = requests.post(
-                f"{BACKEND_URL}/chat",
-                json={"query": query},
-                timeout=120
-            )
+            with st.spinner("Thinking..."):
+
+                response = requests.post(
+                    f"{BACKEND_URL}/chat",
+                    json={"query": query},
+                    timeout=300
+                )
 
             st.write("Status Code:", response.status_code)
-            st.write("Raw Response:", response.text)
 
-            # SAFE RESPONSE
-            if response.text.strip() == "":
-                st.error("Empty response from backend")
+            try:
 
-            else:
+                data = response.json()
 
-                try:
+                if response.status_code == 200:
 
-                    data = response.json()
-
-                    if response.status_code == 200:
-
-                        st.success("Response Generated")
-
-                        st.write(
-                            data.get(
-                                "response",
-                                str(data)
-                            )
+                    st.success(
+                        data.get(
+                            "response",
+                            "No response returned"
                         )
+                    )
 
-                    else:
-                        st.error(data)
+                else:
+                    st.error(data)
 
-                except Exception:
-                    st.error("Backend returned invalid JSON")
-                    st.code(response.text)
+            except Exception:
+
+                st.error("Invalid JSON from backend")
+                st.code(response.text)
 
         except Exception as e:
+
             st.error(str(e))
