@@ -1,10 +1,6 @@
 import streamlit as st
 import requests
 
-# =========================
-# CONFIG
-# =========================
-
 BACKEND_URL = "https://multi-agent-ai-platform-d82d.onrender.com"
 
 st.set_page_config(
@@ -13,83 +9,14 @@ st.set_page_config(
     layout="wide"
 )
 
-# =========================
-# CUSTOM CSS
-# =========================
-
-st.markdown("""
-<style>
-.main {
-    padding-top: 2rem;
-}
-
-.stButton button {
-    width: 100%;
-    border-radius: 10px;
-    height: 3em;
-    font-size: 16px;
-}
-
-.stTextInput input {
-    border-radius: 10px;
-}
-
-.block-container {
-    padding-top: 2rem;
-}
-</style>
-""", unsafe_allow_html=True)
-
-# =========================
-# HEADER
-# =========================
-
 st.title("🤖 Multi-Agent AI Platform")
-st.markdown(
-    "Upload PDFs and chat with your AI-powered RAG assistant."
-)
-
-st.divider()
 
 # =========================
-# SIDEBAR
+# PDF Upload
 # =========================
-
-with st.sidebar:
-
-    st.header("⚡ Features")
-
-    st.markdown("""
-    ✅ PDF Upload  
-    ✅ AI Question Answering  
-    ✅ FAISS Vector Search  
-    ✅ Groq LLM  
-    ✅ FastAPI Backend  
-    ✅ LangGraph Workflow  
-    """)
-
-    st.divider()
-
-    st.markdown("### 🛠 Tech Stack")
-
-    st.markdown("""
-    - FastAPI
-    - LangGraph
-    - FAISS
-    - Streamlit
-    - Groq LLM
-    - Docker
-    - Render
-    """)
-
-# =========================
-# PDF UPLOAD
-# =========================
-
-st.subheader("📄 Upload PDF")
 
 uploaded_file = st.file_uploader(
-    "Choose a PDF file",
+    "Upload PDF",
     type=["pdf"]
 )
 
@@ -105,88 +32,92 @@ if uploaded_file is not None:
 
     try:
 
-        with st.spinner("Uploading and processing PDF..."):
+        response = requests.post(
+            f"{BACKEND_URL}/upload",
+            files=files,
+            timeout=120
+        )
 
-            response = requests.post(
-                f"{BACKEND_URL}/upload",
-                files=files,
-                timeout=120
-            )
+        st.write("Status Code:", response.status_code)
+        st.write("Raw Response:", response.text)
 
-        data = response.json()
-
-        if response.status_code == 200:
-
-            st.success(
-                data.get(
-                    "message",
-                    "PDF uploaded successfully!"
-                )
-            )
+        # SAFE RESPONSE
+        if response.text.strip() == "":
+            st.error("Empty response from backend")
 
         else:
-            st.error(data)
+
+            try:
+                data = response.json()
+
+                if response.status_code == 200:
+                    st.success(
+                        data.get(
+                            "message",
+                            "Upload successful"
+                        )
+                    )
+                else:
+                    st.error(data)
+
+            except Exception:
+                st.error("Backend returned invalid JSON")
+                st.code(response.text)
 
     except Exception as e:
         st.error(str(e))
-
-st.divider()
 
 # =========================
 # CHAT SECTION
 # =========================
 
-st.subheader("💬 Chat with AI")
+query = st.text_input("Ask anything")
 
-query = st.text_input(
-    "Ask a question from your uploaded PDF"
-)
-
-if st.button("🚀 Send Query"):
+if st.button("Send"):
 
     if query.strip() == "":
-
-        st.warning("Please enter a question.")
+        st.warning("Please enter query")
 
     else:
 
         try:
 
-            with st.spinner("Generating response..."):
+            response = requests.post(
+                f"{BACKEND_URL}/chat",
+                json={"query": query},
+                timeout=120
+            )
 
-                response = requests.post(
-                    f"{BACKEND_URL}/chat",
-                    json={"query": query},
-                    timeout=120
-                )
+            st.write("Status Code:", response.status_code)
+            st.write("Raw Response:", response.text)
 
-            data = response.json()
-
-            if response.status_code == 200:
-
-                answer = data.get(
-                    "response",
-                    "No response generated."
-                )
-
-                st.success("Response Generated")
-
-                st.markdown("### 🤖 AI Answer")
-
-                st.write(answer)
+            # SAFE RESPONSE
+            if response.text.strip() == "":
+                st.error("Empty response from backend")
 
             else:
-                st.error(data)
+
+                try:
+
+                    data = response.json()
+
+                    if response.status_code == 200:
+
+                        st.success("Response Generated")
+
+                        st.write(
+                            data.get(
+                                "response",
+                                str(data)
+                            )
+                        )
+
+                    else:
+                        st.error(data)
+
+                except Exception:
+                    st.error("Backend returned invalid JSON")
+                    st.code(response.text)
 
         except Exception as e:
             st.error(str(e))
-
-# =========================
-# FOOTER
-# =========================
-
-st.divider()
-
-st.markdown(
-    "Built using FastAPI, LangGraph, FAISS, Groq, and Streamlit."
-)
