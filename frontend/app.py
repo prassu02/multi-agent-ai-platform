@@ -170,25 +170,6 @@ header {
     font-weight: 600 !important;
 }
 
-/* BUTTON */
-
-.stButton button {
-    width: 100%;
-    border-radius: 14px;
-    border: none;
-    background: linear-gradient(90deg,#2563eb,#7c3aed,#ec4899);
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 14px;
-    transition: 0.3s;
-}
-
-.stButton button:hover {
-    transform: scale(1.02);
-    box-shadow: 0 0 25px rgba(168,85,247,0.5);
-}
-
 /* CHAT RESPONSE */
 
 .chat-box {
