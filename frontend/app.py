@@ -136,10 +136,17 @@ header {
 /* FILE UPLOADER */
 
 [data-testid="stFileUploader"] {
-    background: rgba(255,255,255,0.04);
-    border: 2px dashed rgba(255,255,255,0.15);
-    border-radius: 18px;
-    padding: 18px;
+    background: linear-gradient(135deg, rgba(56,189,248,0.08), rgba(139,92,246,0.08));
+    border: 2px dashed rgba(56,189,248,0.4) !important;
+    border-radius: 20px;
+    padding: 22px;
+    transition: all 0.3s ease-in-out;
+}
+
+[data-testid="stFileUploader"]:hover {
+    border: 2px dashed #38bdf8 !important;
+    box-shadow: 0 0 25px rgba(56,189,248,0.25);
+    transform: scale(1.01);
 }
 
 /* BUTTON */
