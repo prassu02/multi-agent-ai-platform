@@ -1,17 +1,19 @@
+import os
 from fastapi import FastAPI
-from app.api.chat import router as chat_router
+
 from app.api.upload import router as upload_router
-from app.api.health import router as health_router
+from app.api.chat import router as chat_router
 
-app = FastAPI(title="Multi-Agent AI Platform")
+app = FastAPI()
 
-app.include_router(chat_router)
+# CREATE REQUIRED FOLDERS
+os.makedirs("uploads", exist_ok=True)
+os.makedirs("faiss_index", exist_ok=True)
+
 app.include_router(upload_router)
-app.include_router(health_router)
+app.include_router(chat_router)
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
-@app.get("/")
-def home():
-    return {
-        "message": "AI Platform Running"
-    }
