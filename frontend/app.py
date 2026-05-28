@@ -1,10 +1,9 @@
 import streamlit as st
 import requests
-import time
 
-# ==========================================
+# =========================================
 # CONFIG
-# ==========================================
+# =========================================
 
 BACKEND_URL = "https://multi-agent-ai-platform-d82d.onrender.com"
 
@@ -15,183 +14,249 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ==========================================
+# =========================================
 # CUSTOM CSS
-# ==========================================
+# =========================================
 
 st.markdown("""
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-html, body, [class*="css"]  {
+html, body, [class*="css"] {
     font-family: 'Poppins', sans-serif;
 }
 
-/* Main Background */
+/* MAIN BACKGROUND */
+
 .stApp {
-    background: linear-gradient(
-        135deg,
-        #0f172a 0%,
-        #111827 50%,
-        #020617 100%
-    );
+    background:
+    radial-gradient(circle at top left, #111827 0%, #020617 45%),
+    linear-gradient(to right, #020617, #0f172a);
     color: white;
 }
 
-/* Title */
+/* SIDEBAR */
+
+section[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #020617, #0f172a);
+    border-right: 1px solid rgba(255,255,255,0.08);
+}
+
+/* REMOVE WHITE HEADER */
+
+header {
+    background: transparent !important;
+}
+
+/* TITLE */
+
 .main-title {
-    font-size: 48px;
+    font-size: 52px;
     font-weight: 700;
-    color: white;
-    margin-bottom: 5px;
+    background: linear-gradient(90deg,#38bdf8,#8b5cf6,#ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
 }
 
-.sub-title {
-    color: #94a3b8;
+.subtitle {
+    color: #cbd5e1;
     font-size: 18px;
     margin-bottom: 30px;
 }
 
-/* Cards */
-.card {
-    background: rgba(255,255,255,0.05);
-    padding: 25px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.08);
-    backdrop-filter: blur(10px);
-    box-shadow: 0px 4px 30px rgba(0,0,0,0.2);
-}
+/* METRIC CARDS */
 
-/* Buttons */
-.stButton>button {
-    width: 100%;
-    background: linear-gradient(
-        90deg,
-        #2563eb,
-        #7c3aed
-    );
-    color: white;
-    border: none;
-    border-radius: 12px;
-    height: 50px;
-    font-size: 16px;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-.stButton>button:hover {
-    transform: scale(1.02);
-    box-shadow: 0px 0px 20px rgba(124,58,237,0.5);
-}
-
-/* Input */
-.stTextInput>div>div>input {
-    background-color: rgba(255,255,255,0.05);
-    color: white;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-/* File uploader */
-[data-testid="stFileUploader"] {
-    background: rgba(255,255,255,0.03);
-    padding: 20px;
-    border-radius: 15px;
-    border: 1px dashed rgba(255,255,255,0.2);
-}
-
-/* Response Box */
-.response-box {
-    background: rgba(15,23,42,0.8);
-    padding: 20px;
-    border-radius: 15px;
-    border-left: 5px solid #3b82f6;
-    margin-top: 20px;
-}
-
-/* Sidebar */
-section[data-testid="stSidebar"] {
-    background: #020617;
-    border-right: 1px solid rgba(255,255,255,0.08);
-}
-
-/* Metric Cards */
 .metric-card {
     background: rgba(255,255,255,0.05);
-    padding: 20px;
-    border-radius: 15px;
-    text-align: center;
     border: 1px solid rgba(255,255,255,0.08);
+    padding: 25px;
+    border-radius: 22px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+    box-shadow: 0 0 20px rgba(0,0,0,0.25);
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
+    border: 1px solid #38bdf8;
+    box-shadow: 0 0 30px rgba(56,189,248,0.35);
 }
 
 .metric-title {
-    font-size: 14px;
     color: #94a3b8;
+    font-size: 15px;
+    margin-bottom: 10px;
 }
 
 .metric-value {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 700;
     color: white;
+}
+
+/* SECTION BOX */
+
+.section-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 28px;
+    border-radius: 24px;
+    backdrop-filter: blur(12px);
+    margin-top: 20px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.2);
+}
+
+/* INPUT */
+
+.stTextInput input {
+    background-color: rgba(255,255,255,0.08) !important;
+    color: white !important;
+    border-radius: 14px !important;
+    border: 1px solid rgba(255,255,255,0.15) !important;
+    padding: 14px !important;
+    font-size: 16px !important;
+}
+
+.stTextInput input:focus {
+    border: 1px solid #38bdf8 !important;
+    box-shadow: 0 0 15px rgba(56,189,248,0.4);
+}
+
+/* FILE UPLOADER */
+
+[data-testid="stFileUploader"] {
+    background: rgba(255,255,255,0.04);
+    border: 2px dashed rgba(255,255,255,0.15);
+    border-radius: 18px;
+    padding: 18px;
+}
+
+/* BUTTON */
+
+.stButton button {
+    width: 100%;
+    border-radius: 14px;
+    border: none;
+    background: linear-gradient(90deg,#2563eb,#7c3aed,#ec4899);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 14px;
+    transition: 0.3s;
+}
+
+.stButton button:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 25px rgba(168,85,247,0.5);
+}
+
+/* CHAT RESPONSE */
+
+.chat-box {
+    background: linear-gradient(
+        135deg,
+        rgba(15,23,42,0.95),
+        rgba(30,41,59,0.95)
+    );
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 28px;
+    border-radius: 22px;
+    color: #f8fafc;
+    line-height: 1.9;
+    font-size: 17px;
+    margin-top: 20px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.25);
+}
+
+/* SUCCESS */
+
+.stSuccess {
+    background-color: rgba(16,185,129,0.15) !important;
+    color: #10b981 !important;
+    border-radius: 12px;
+}
+
+/* FOOTER */
+
+.footer {
+    text-align: center;
+    color: #94a3b8;
+    margin-top: 40px;
+    padding: 20px;
+    font-size: 14px;
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(#3b82f6,#8b5cf6);
+    border-radius: 20px;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
-# ==========================================
+# =========================================
 # SIDEBAR
-# ==========================================
+# =========================================
 
 with st.sidebar:
 
-    st.markdown("# 🤖 AI Platform")
+    st.markdown("## 🤖 AI Platform")
 
     st.markdown("---")
 
-    st.markdown("### ⚡ Tech Stack")
-
     st.markdown("""
+    ### ⚡ Tech Stack
+
     - LangGraph
     - FastAPI
-    - Groq LLaMA3
+    - Groq LLM
     - FAISS
+    - Streamlit
     - PostgreSQL
     - Redis
-    - Streamlit
+    - Docker
     - Render
     """)
 
     st.markdown("---")
 
-    st.markdown("### 🚀 Features")
-
     st.markdown("""
+    ### 🚀 Features
+
     ✅ Multi-Agent AI  
     ✅ PDF RAG System  
     ✅ Vector Search  
-    ✅ Fast Responses  
-    ✅ AI Chat Interface  
+    ✅ AI Chat  
     ✅ Cloud Deployment  
+    ✅ Modern UI  
     """)
 
-# ==========================================
+# =========================================
 # HEADER
-# ==========================================
+# =========================================
 
-st.markdown("""
-<div class="main-title">
-🤖 Multi-Agent AI Platform
-</div>
+st.markdown(
+    '<div class="main-title">🤖 Multi-Agent AI Platform</div>',
+    unsafe_allow_html=True
+)
 
-<div class="sub-title">
-Production-Ready Generative AI System with RAG + LangGraph + Groq
-</div>
-""", unsafe_allow_html=True)
+st.markdown(
+    '<div class="subtitle">Production-Ready Generative AI System with RAG + LangGraph + Groq</div>',
+    unsafe_allow_html=True
+)
 
-# ==========================================
-# METRICS
-# ==========================================
+# =========================================
+# TOP METRICS
+# =========================================
 
 col1, col2, col3, col4 = st.columns(4)
 
@@ -214,7 +279,7 @@ with col2:
 with col3:
     st.markdown("""
     <div class="metric-card">
-        <div class="metric-title">RAG</div>
+        <div class="metric-title">Vector DB</div>
         <div class="metric-value">FAISS</div>
     </div>
     """, unsafe_allow_html=True)
@@ -227,27 +292,24 @@ with col4:
     </div>
     """, unsafe_allow_html=True)
 
-st.write("")
-st.write("")
-
-# ==========================================
+# =========================================
 # MAIN LAYOUT
-# ==========================================
+# =========================================
 
-left_col, right_col = st.columns([1, 1])
+left, right = st.columns([1, 1])
 
-# ==========================================
-# PDF UPLOAD
-# ==========================================
+# =========================================
+# LEFT PANEL
+# =========================================
 
-with left_col:
+with left:
 
-    st.markdown('<div class="card">', unsafe_allow_html=True)
+    st.markdown('<div class="section-box">', unsafe_allow_html=True)
 
     st.subheader("📄 Upload PDF")
 
     uploaded_file = st.file_uploader(
-        "Upload your document",
+        "Upload your PDF document",
         type=["pdf"]
     )
 
@@ -263,106 +325,100 @@ with left_col:
 
         try:
 
-            with st.spinner("Uploading and processing PDF..."):
+            with st.spinner("Uploading and Processing PDF..."):
 
                 response = requests.post(
                     f"{BACKEND_URL}/upload",
                     files=files,
-                    timeout=300
+                    timeout=120
                 )
 
-            if response.status_code == 200:
+            data = response.json()
 
-                data = response.json()
+            if response.status_code == 200:
 
                 st.success(
                     data.get(
                         "message",
-                        "Upload successful"
+                        "PDF uploaded successfully"
                     )
                 )
 
             else:
-
-                st.error(
-                    f"Error: {response.text}"
-                )
+                st.error(data)
 
         except Exception as e:
-
             st.error(str(e))
 
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ==========================================
-# CHAT SECTION
-# ==========================================
+# =========================================
+# RIGHT PANEL
+# =========================================
 
-with right_col:
+with right:
 
-    st.markdown('<div class="card">', unsafe_allow_html=True)
+    st.markdown('<div class="section-box">', unsafe_allow_html=True)
 
     st.subheader("💬 AI Chat")
 
     query = st.text_input(
-        "Ask anything about AI, ML, or uploaded PDFs"
+        "Ask questions about AI, ML, or uploaded PDFs"
     )
 
     if st.button("🚀 Generate Response"):
 
         if query.strip() == "":
-
             st.warning("Please enter a query")
 
         else:
 
             try:
 
-                with st.spinner("AI is thinking..."):
+                with st.spinner("Generating AI Response..."):
 
                     response = requests.post(
                         f"{BACKEND_URL}/chat",
                         json={"query": query},
-                        timeout=300
+                        timeout=120
                     )
 
-                if response.status_code == 200:
+                data = response.json()
 
-                    data = response.json()
+                if response.status_code == 200:
 
                     answer = data.get(
                         "response",
                         "No response generated"
                     )
 
-                    st.markdown(f"""
-                    <div class="response-box">
-                    {answer}
-                    </div>
-                    """, unsafe_allow_html=True)
+                    st.markdown(
+                        f"""
+                        <div class="chat-box">
+                        {answer}
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
 
                 else:
-
-                    st.error(response.text)
+                    st.error(data)
 
             except Exception as e:
-
                 st.error(str(e))
 
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ==========================================
+# =========================================
 # FOOTER
-# ==========================================
+# =========================================
 
-st.write("")
-st.write("")
-
-st.markdown("""
-<center>
-
-Made with ❤️ using FastAPI + LangGraph + Groq + Streamlit
-
-</center>
-""", unsafe_allow_html=True)
+st.markdown(
+    """
+    <div class="footer">
+        Made with ❤️ using FastAPI • LangGraph • Groq • Streamlit
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
