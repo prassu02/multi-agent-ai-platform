@@ -113,11 +113,19 @@ header {
 
 .stTextInput input {
     background-color: rgba(255,255,255,0.08) !important;
-    color: white !important;
+    color: #ff4b4b !important;   /* RED TEXT */
     border-radius: 14px !important;
     border: 1px solid rgba(255,255,255,0.15) !important;
     padding: 14px !important;
     font-size: 16px !important;
+    font-weight: 600 !important;
+}
+
+/* Placeholder color */
+
+.stTextInput input::placeholder {
+    color: #ff8080 !important;
+    opacity: 1 !important;
 }
 
 .stTextInput input:focus {
