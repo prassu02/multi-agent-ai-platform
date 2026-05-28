@@ -133,20 +133,35 @@ header {
     box-shadow: 0 0 15px rgba(56,189,248,0.4);
 }
 
-/* FILE UPLOADER - PREMIUM VERSION */
+/* FILE UPLOADER */
 
 [data-testid="stFileUploader"] {
-    background: linear-gradient(135deg, rgba(56,189,248,0.08), rgba(139,92,246,0.08));
-    border: 2px dashed rgba(56,189,248,0.4) !important;
-    border-radius: 20px;
-    padding: 22px;
-    transition: all 0.3s ease-in-out;
+    background: linear-gradient(135deg, rgba(56,189,248,0.12), rgba(139,92,246,0.12), rgba(236,72,153,0.08));
+    border: 2px dashed transparent !important;
+    border-radius: 22px;
+    padding: 24px;
+    transition: all 0.35s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+[data-testid="stFileUploader"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: 22px;
+    background: linear-gradient(90deg,#38bdf8,#8b5cf6,#ec4899,#22c55e);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+                  linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.7;
 }
 
 [data-testid="stFileUploader"]:hover {
-    border: 2px dashed #38bdf8 !important;
-    box-shadow: 0 0 25px rgba(56,189,248,0.25);
-    transform: scale(1.01);
+    transform: scale(1.02);
+    box-shadow: 0 0 35px rgba(56,189,248,0.25);
 }
 
 /* GREEN TEXT */
@@ -168,6 +183,25 @@ header {
     color: white !important;
     border-radius: 12px !important;
     font-weight: 600 !important;
+}
+
+/* BUTTON */
+
+.stButton button {
+    width: 100%;
+    border-radius: 14px;
+    border: none;
+    background: linear-gradient(90deg,#2563eb,#7c3aed,#ec4899);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 14px;
+    transition: 0.3s;
+}
+
+.stButton button:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 25px rgba(168,85,247,0.5);
 }
 
 /* CHAT RESPONSE */
