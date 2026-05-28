@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-BACKEND_URL = "https://multi-agent-ai-platform-lmnr.onrender.com"
+BACKEND_URL = "https://multi-agent-ai-platform-d82d.onrender.com"
 
 st.set_page_config(
     page_title="Multi-Agent AI Platform",
