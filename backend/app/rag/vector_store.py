@@ -1,3 +1,5 @@
+import os
+
 from langchain_community.vectorstores import FAISS
 
 from app.rag.embeddings import embedding_model
@@ -17,9 +19,24 @@ def create_vector_store(pdf_path):
         embedding_model
     )
 
+    # CREATE DIRECTORY
+    os.makedirs(DB_FAISS_PATH, exist_ok=True)
+
+    # SAVE FAISS
     db.save_local(DB_FAISS_PATH)
 
 def load_vector_store():
+
+    index_file = os.path.join(
+        DB_FAISS_PATH,
+        "index.faiss"
+    )
+
+    # CHECK IF INDEX EXISTS
+    if not os.path.exists(index_file):
+        raise Exception(
+            "FAISS index not found. Please upload a PDF first."
+        )
 
     db = FAISS.load_local(
         DB_FAISS_PATH,
