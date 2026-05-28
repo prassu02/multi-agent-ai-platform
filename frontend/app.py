@@ -445,10 +445,6 @@ Ask questions about AI, ML, or uploaded PDFs
 </div>
 """, unsafe_allow_html=True)
 
-    query = st.text_input(
-        "Ask questions about AI, ML, or uploaded PDFs"
-    )
-
     if st.button("🚀 Generate Response"):
 
         if query.strip() == "":
