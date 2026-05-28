@@ -1,34 +1,24 @@
 from fastapi import APIRouter, UploadFile, File
-import os
+import shutil
 
-from app.services.document_loader import load_pdf
-from app.services.text_splitter import split_text
-from app.services.embedding_service import create_embeddings
-from app.services.vector_store import store_embeddings
+from app.rag.document_loader import load_pdf
+from app.rag.vector_store import create_vector_store
 
 router = APIRouter()
 
-UPLOAD_DIR = "uploads"
-
-os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @router.post("/upload")
-async def upload_document(file: UploadFile = File(...)):
+def upload_pdf(file: UploadFile = File(...)):
 
-    file_path = os.path.join(UPLOAD_DIR, file.filename)
+    file_path = f"app/uploads/{file.filename}"
 
-    with open(file_path, "wb") as f:
-        f.write(await file.read())
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
 
-    text = load_pdf(file_path)
+    docs = load_pdf(file_path)
 
-    chunks = split_text(text)
-
-    embeddings = create_embeddings(chunks)
-
-    store_embeddings(chunks, embeddings)
+    create_vector_store(docs)
 
     return {
-        "message": "Document uploaded successfully",
-        "chunks": len(chunks)
+        "message": "PDF uploaded successfully"
     }
