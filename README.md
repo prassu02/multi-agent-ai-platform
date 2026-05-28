@@ -57,63 +57,26 @@ User → Streamlit UI → FastAPI Backend → LangGraph Multi-Agent Workflow
 ---
 
 ## 📁 Project Structure
-
 multi-agent-ai-platform/
 │
 ├── backend/
 │   ├── app/
-│   │   ├── agents/                 # Multi-agent system (RAG, research, memory, report)
-│   │   │   ├── research_agent.py
-│   │   │   ├── rag_agent.py
-│   │   │   ├── memory_agent.py
-│   │   │   ├── report_agent.py
-│   │   │   ├── workflow.py
-│   │   │   └── __init__.py
-│   │   │
-│   │   ├── api/                    # FastAPI routes (chat, upload, health)
-│   │   │   ├── chat.py
-│   │   │   ├── upload.py
-│   │   │   ├── health.py
-│   │   │   └── __init__.py
-│   │   │
-│   │   ├── core/                   # Configuration & settings
-│   │   │   ├── config.py
-│   │   │   └── __init__.py
-│   │   │
-│   │   ├── database/               # Database connections
-│   │   │   ├── db.py
-│   │   │   └── __init__.py
-│   │   │
-│   │   ├── memory/                 # Redis memory layer
-│   │   │   └── redis_memory.py
-│   │   │
-│   │   ├── rag/                    # RAG pipeline (PDF → embeddings → FAISS)
-│   │   │   ├── document_loader.py
-│   │   │   ├── text_splitter.py
-│   │   │   ├── embeddings.py
-│   │   │   ├── vector_store.py
-│   │   │   ├── retriever.py
-│   │   │   └── __init__.py
-│   │   │
-│   │   ├── services/              # External services (LLM, DB, Redis)
-│   │   │   ├── llm_service.py
-│   │   │   ├── postgres_service.py
-│   │   │   ├── redis_service.py
-│   │   │   └── __init__.py
-│   │   │
-│   │   ├── uploads/               # Uploaded PDFs storage
-│   │   │
-│   │   ├── main.py                # FastAPI entry point
-│   │   └── __init__.py
-│   │
+│   │   ├── agents/              # RAG, research, memory, report agents
+│   │   ├── api/                 # FastAPI routes (chat, upload, health)
+│   │   ├── rag/                 # Document loader, embeddings, FAISS
+│   │   ├── services/           # LLM, Redis, PostgreSQL services
+│   │   ├── memory/             # Redis memory layer
+│   │   ├── core/               # Configuration settings
+│   │   ├── database/           # DB connection setup
+│   │   ├── uploads/            # Uploaded PDF storage
+│   │   └── main.py             # FastAPI entry point
+│
 │   ├── requirements.txt
 │   ├── Dockerfile
-│   ├── .env
-│   ├── runtime.txt
-│   └── .dockerignore
+│   └── .env
 │
 ├── frontend/
-│   ├── app.py                     # Streamlit UI (frontend)
+│   ├── app.py                  # Streamlit UI
 │   ├── requirements.txt
 │   └── .streamlit/
 │       └── config.toml
@@ -121,7 +84,6 @@ multi-agent-ai-platform/
 ├── docker-compose.yml
 ├── .gitignore
 └── README.md
----
 
 ## 🚀 Features
 
