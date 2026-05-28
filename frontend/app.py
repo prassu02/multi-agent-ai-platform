@@ -133,7 +133,7 @@ header {
     box-shadow: 0 0 15px rgba(56,189,248,0.4);
 }
 
-/* FILE UPLOADER */
+/* FILE UPLOADER - PREMIUM VERSION */
 
 [data-testid="stFileUploader"] {
     background: linear-gradient(135deg, rgba(56,189,248,0.08), rgba(139,92,246,0.08));
@@ -147,6 +147,27 @@ header {
     border: 2px dashed #38bdf8 !important;
     box-shadow: 0 0 25px rgba(56,189,248,0.25);
     transform: scale(1.01);
+}
+
+/* GREEN TEXT */
+[data-testid="stFileUploader"] label {
+    color: #22c55e !important;   /* green title */
+    font-weight: 600 !important;
+}
+
+[data-testid="stFileUploader"] small,
+[data-testid="stFileUploader"] span,
+[data-testid="stFileUploader"] div {
+    color: #4ade80 !important;   /* light green helper text */
+    font-size: 13px !important;
+}
+
+/* BUTTON: file name button */
+[data-testid="stFileUploader"] button {
+    background: linear-gradient(90deg,#22c55e,#16a34a) !important;
+    color: white !important;
+    border-radius: 12px !important;
+    font-weight: 600 !important;
 }
 
 /* BUTTON */
