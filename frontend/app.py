@@ -20,6 +20,19 @@ st.set_page_config(
 
 st.markdown("""
 <style>
+.stSubheader {
+    font-size: 24px !important;
+    font-weight: 800 !important;
+    background: linear-gradient(90deg,#38bdf8,#8b5cf6,#ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+}
+
+.stTextInput label {
+    color: #94a3b8 !important;
+    font-size: 13px !important;
+}
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
@@ -411,7 +424,26 @@ with right:
 
     st.markdown('<div class="section-box">', unsafe_allow_html=True)
 
-    st.subheader("💬 AI Chat")
+    st.markdown("""
+<div style="
+    font-size:24px;
+    font-weight:800;
+    background: linear-gradient(90deg,#38bdf8,#8b5cf6,#ec4899);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    margin-bottom:5px;
+">
+💬 AI Chat
+</div>
+
+<div style="
+    color:#94a3b8;
+    font-size:13px;
+    margin-bottom:10px;
+">
+Ask questions about AI, ML, or uploaded PDFs
+</div>
+""", unsafe_allow_html=True)
 
     query = st.text_input(
         "Ask questions about AI, ML, or uploaded PDFs"
