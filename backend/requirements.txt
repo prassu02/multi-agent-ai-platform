@@ -8,13 +8,13 @@ langchain-community
 langchain-groq
 
 sentence-transformers==2.7.0
-faiss-cpu==1.7.4
+faiss-cpu==1.14.2
 
 pypdf
 python-docx
 
 pandas
-numpy<2.0
+numpy
 
 sqlalchemy
 psycopg2-binary
@@ -22,8 +22,9 @@ redis
 
 python-dotenv
 requests
+
 pydantic
 
-torch==2.2.2
-transformers==4.41.2
+torch
+transformers
 
