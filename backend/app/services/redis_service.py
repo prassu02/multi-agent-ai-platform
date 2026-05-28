@@ -1,15 +1,18 @@
-import redis
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-redis_client = redis.from_url(
-    os.getenv("REDIS_URL")
+from upstash_redis import Redis
+from app.core.config import (
+    UPSTASH_REDIS_REST_URL,
+    UPSTASH_REDIS_REST_TOKEN
 )
 
-def set_memory(key, value):
-    redis_client.set(key, value)
+redis_client = Redis(
+    url=UPSTASH_REDIS_REST_URL,
+    token=UPSTASH_REDIS_REST_TOKEN
+)
 
-def get_memory(key):
-    return redis_client.get(key)
+
+def save_chat(user_id, message):
+    redis_client.lpush(user_id, message)
+
+
+def get_chat_history(user_id):
+    return redis_client.lrange(user_id, 0, 10)
