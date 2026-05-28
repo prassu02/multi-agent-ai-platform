@@ -1,14 +1,7 @@
 from langchain_groq import ChatGroq
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
+from app.core.config import GROQ_API_KEY
 
 llm = ChatGroq(
-    groq_api_key=os.getenv("GROQ_API_KEY"),
+    groq_api_key=GROQ_API_KEY,
     model_name="llama3-8b-8192"
 )
-
-def generate_response(prompt: str):
-    response = llm.invoke(prompt)
-    return response.content
