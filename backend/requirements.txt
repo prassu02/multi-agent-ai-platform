@@ -5,8 +5,6 @@ langchain
 langgraph
 langchain-community
 langchain-groq
-sentence-transformers==2.7.0
-faiss-cpu==1.14.2
 pypdf
 python-docx
 pandas
@@ -17,8 +15,4 @@ redis
 python-dotenv
 requests
 pydantic
-torch
-transformers
 scikit-learn
-scipy
-
