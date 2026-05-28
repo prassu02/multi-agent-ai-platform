@@ -1,30 +1,22 @@
-from typing import TypedDict
+from app.rag.retriever import retrieve_docs
+from app.services.llm_service import llm
 
-from langgraph.graph import StateGraph, END
 
-from app.agents.agents import (
-    retrieval_agent,
-    research_agent,
-    summarizer_agent
-)
+def rag_agent(query):
+    docs = retrieve_docs(query)
 
-class AgentState(TypedDict):
+    context = "\n".join([doc.page_content for doc in docs])
 
-    query: str
-    retrieved_data: str
-    research_output: str
-    final_output: str
+    prompt = f"""
+    Answer using the provided context.
 
-workflow = StateGraph(AgentState)
+    Context:
+    {context}
 
-workflow.add_node("retrieval", retrieval_agent)
-workflow.add_node("research", research_agent)
-workflow.add_node("summary", summarizer_agent)
+    Question:
+    {query}
+    """
 
-workflow.set_entry_point("retrieval")
+    response = llm.invoke(prompt)
 
-workflow.add_edge("retrieval", "research")
-workflow.add_edge("research", "summary")
-workflow.add_edge("summary", END)
-
-app_graph = workflow.compile()
+    return response.content
