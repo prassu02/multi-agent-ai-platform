@@ -3,11 +3,21 @@ import requests
 
 BACKEND_URL = "https://multi-agent-ai-platform-lmnr.onrender.com"
 
-st.title("Multi-Agent AI Platform")
+st.set_page_config(
+    page_title="Multi-Agent AI Platform",
+    layout="wide"
+)
 
-uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
+st.title("🤖 Multi-Agent AI Platform")
 
-# ================= UPLOAD =================
+# =========================
+# PDF Upload
+# =========================
+
+uploaded_file = st.file_uploader(
+    "Upload PDF",
+    type=["pdf"]
+)
 
 if uploaded_file is not None:
 
@@ -20,58 +30,87 @@ if uploaded_file is not None:
     }
 
     try:
-        response = requests.post(
-            f"{BACKEND_URL}/upload",
-            files=files,
-            timeout=120
-        )
+
+        with st.spinner("Uploading PDF..."):
+
+            response = requests.post(
+                f"{BACKEND_URL}/upload",
+                files=files,
+                timeout=120
+            )
 
         st.write("Status Code:", response.status_code)
 
-        # DEBUG RESPONSE
-        st.write("Response Text:", response.text)
+        st.write("Raw Response:", response.text)
 
-        if response.status_code == 200:
+        # SAFE JSON HANDLING
+        try:
             data = response.json()
 
-            if "message" in data:
-                st.success(data["message"])
+            if response.status_code == 200:
+                st.success(
+                    data.get(
+                        "message",
+                        "Upload successful"
+                    )
+                )
             else:
-                st.success("Upload successful")
+                st.error(data)
 
-        else:
-            st.error(f"Upload failed: {response.text}")
+        except Exception:
+            st.error("Backend did not return JSON")
+            st.code(response.text)
 
     except Exception as e:
-        st.error(f"Error: {str(e)}")
+        st.error(str(e))
 
-# ================= CHAT =================
+# =========================
+# Chat Section
+# =========================
 
 query = st.text_input("Ask anything")
 
 if st.button("Send"):
 
-    try:
-        response = requests.post(
-            f"{BACKEND_URL}/chat",
-            json={"query": query},
-            timeout=120
-        )
+    if query.strip() == "":
+        st.warning("Please enter a query")
 
-        st.write("Status Code:", response.status_code)
+    else:
 
-        st.write("Response Text:", response.text)
+        try:
 
-        if response.status_code == 200:
-            data = response.json()
+            with st.spinner("Thinking..."):
 
-            if "response" in data:
-                st.success(data["response"])
-            else:
-                st.success(str(data))
+                response = requests.post(
+                    f"{BACKEND_URL}/chat",
+                    json={"query": query},
+                    timeout=120
+                )
 
-        else:
-            st.error(response.text)
+            st.write("Status Code:", response.status_code)
 
-    except Exception as e:
-        st.error(str(e))
+            st.write("Raw Response:", response.text)
+
+            # SAFE JSON HANDLING
+            try:
+
+                data = response.json()
+
+                if response.status_code == 200:
+
+                    st.success(
+                        data.get(
+                            "response",
+                            str(data)
+                        )
+                    )
+
+                else:
+                    st.error(data)
+
+            except Exception:
+                st.error("Backend did not return JSON")
+                st.code(response.text)
+
+        except Exception as e:
+            st.error(str(e))
