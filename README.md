@@ -55,37 +55,8 @@ User → Streamlit UI → FastAPI Backend → LangGraph Multi-Agent Workflow
 - Docker support
 
 ---
-📁 Project Structure
+## 📁 Project Structure
 
-multi-agent-ai-platform/
-│
-├── backend/
-│   │
-│   ├── app/
-│   │   ├── agents/              # RAG, research, memory, report agents
-│   │   ├── api/                 # FastAPI routes (chat, upload, health)
-│   │   ├── rag/                 # Document loader, embeddings, FAISS
-│   │   ├── services/            # LLM, Redis, PostgreSQL services
-│   │   ├── memory/              # Redis memory layer
-│   │   ├── core/                # Configuration settings
-│   │   ├── database/            # DB connection setup
-│   │   ├── uploads/             # Uploaded PDF storage
-│   │   └── main.py              # FastAPI entry point
-│
-│   ├── requirements.txt
-│   ├── Dockerfile
-│   └── .env
-│
-├── frontend/
-│   │
-│   ├── app.py                   # Streamlit UI
-│   ├── requirements.txt
-│   └── .streamlit/
-│       └── config.toml
-│
-├── docker-compose.yml
-├── .gitignore
-└── README.md
 ## 🚀 Features
 
 ### 🧠 AI Capabilities
