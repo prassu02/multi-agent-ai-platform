@@ -149,16 +149,12 @@ POST /chat
 ✔ FastAPI scalable backend
 ✔ Beautiful Streamlit UI
 ✔ Production deployment on Render
+```
 
-🛠 Future Improvements
-Add authentication (JWT)
-Add chat history storage
-Add streaming responses
-Add multi-PDF comparison
-Deploy with Kubernetes
 👨‍💻 Author
 
 Prasanna Kumar
 
 AI & Data Science
 Machine Learning | Deep Learning | GenAI | MLOps
+```
