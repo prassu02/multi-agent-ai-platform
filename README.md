@@ -49,7 +49,7 @@ User → Streamlit UI → FastAPI Backend → LangGraph Multi-Agent Workflow
 - PostgreSQL (structured data)
 - Redis (short-term memory)
 
-### 🔹 DevOps / Deployment
+### 🔹 Deployment
 - Render (Backend deployment)
 - Streamlit Cloud (Frontend deployment)
 - Docker support
@@ -150,10 +150,6 @@ POST /chat
 ✔ Beautiful Streamlit UI
 ✔ Production deployment on Render
 
-⚠️ Known Issues (Handled)
-FAISS index auto-creation required on first upload
-Groq model deprecation handled via updated API models
-JSON response safety added in frontend
 🛠 Future Improvements
 Add authentication (JWT)
 Add chat history storage
