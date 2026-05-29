@@ -128,7 +128,7 @@ GET /health
 
 
 ---
-
+```
 ## 🧪 Example Usage
 ---
 ### Upload PDF
@@ -150,6 +150,7 @@ POST /chat
 ✔ FastAPI scalable backend
 ✔ Beautiful Streamlit UI
 ✔ Production deployment on Render
+```
 ```
 
 👨‍💻 Author
