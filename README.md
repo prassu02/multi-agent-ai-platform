@@ -53,6 +53,19 @@ User → Streamlit UI → FastAPI Backend → LangGraph Multi-Agent Workflow
 - Render (Backend deployment)
 - Streamlit Cloud (Frontend deployment)
 - Docker support
+  
+## ⚙️ Final Tech Stack
+
+| Layer | Technology |
+| :--- | :--- |
+| **Frontend** | Streamlit |
+| **Backend API** | FastAPI |
+| **AI Orchestration** | LangGraph |
+| **LLM** | Groq + LLaMA 3 |
+| **Retrieval** | FAISS + Sentence Transformers |
+| **Database** | Neon PostgreSQL |
+| **Memory** | Upstash Redis |
+| **Deployment** | Docker + Render |
 
 ---
 ## 📁 Project Structure
