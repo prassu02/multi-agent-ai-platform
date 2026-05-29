@@ -108,8 +108,6 @@ multi-agent-ai-platform/
 - Modern glassmorphism UI
 - Gradient-based AI dashboard
 - Responsive Streamlit interface
-- Recruiter-ready design
-
 ---
 
 ## 🔥 API Endpoints
