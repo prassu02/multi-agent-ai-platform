@@ -130,7 +130,7 @@ GET /health
 ---
 
 ## 🧪 Example Usage
-
+---
 ### Upload PDF
 ```bash
 curl -X POST "https://multi-agent-ai-platform-d82d.onrender.com/upload" \
@@ -140,6 +140,7 @@ POST /chat
 {
   "query": "What is Machine Learning?"
 }
+---
 📊 Key Highlights
 
 ✔ Multi-Agent AI system
